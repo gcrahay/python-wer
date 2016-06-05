@@ -32,7 +32,7 @@ Overview
     :alt: Requirements Status
     :target: https://requires.io/github/gcrahay/python-wer/requirements/?branch=master
 
-.. |coveralls| image:: https://coveralls.io/repos/gcrahay/python-wer/badge.svg?branch=master&service=github
+.. |coveralls| image:: https://coveralls.io/repos/github/gcrahay/python-wer/badge.svg?branch=master
     :alt: Coverage Status
     :target: https://coveralls.io/r/gcrahay/python-wer
 
