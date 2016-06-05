@@ -34,3 +34,12 @@ def test_loading_from_string():
         """
     report = wer.Report.from_string(xml_string)
     assert isinstance(report, wer.Report)
+
+
+def test_loading_from_files():
+    from os import path
+    from glob import glob
+    examples_path = path.join(path.basename(__file__), 'data', 'examples')
+    for f in glob(path.join(examples_path, '*.wer')):
+        report = wer.Report.from_file(f)
+        assert isinstance(report, wer.Report)
