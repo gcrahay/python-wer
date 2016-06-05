@@ -117,10 +117,22 @@ class Report(xmlmap.XmlObject):
 
     @classmethod
     def from_file(cls, file_path, validate=True):
-        """ Creates a Report from a XML file """
+        """ Creates a Report from a XML file
+
+        :param file_path: Path to the XML WER file
+        :param validate: XML should be validated against the embedded XSD definition
+        :type validate: Boolean
+        :returns: :class:`wer.schema.Report`
+        """
         return xmlmap.load_xmlobject_from_file(file_path, xmlclass=cls, validate=validate)
 
     @classmethod
     def from_string(cls, xml_string, validate=True):
-        """ Creates a Report from a XML string """
+        """ Creates a Report from a XML string
+
+        :param xml_string: XML WER string
+        :param validate: XML should be validated against the embedded XSD definition
+        :type validate: Boolean
+        :returns: :class:`wer.schema.Report`
+        """
         return xmlmap.load_xmlobject_from_string(xml_string, xmlclass=cls, validate=validate)
