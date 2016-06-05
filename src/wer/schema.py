@@ -110,3 +110,13 @@ class Report(xmlmap.XmlObject):
     """ Event secondary parameters :type list of :class:`wer.schema.SecondaryParameter` """
     files = xmlmap.NodeListField('FILES/FILE', File)
     """ Event attached files :type list of :class:`wer.schema.File` """
+
+    @classmethod
+    def from_file(cls, file_path):
+        """ Creates a Report from a XML file """
+        return xmlmap.load_xmlobject_from_file(file_path, xmlclass=cls)
+
+    @classmethod
+    def from_string(cls, xml_string):
+        """ Creates a Report from a XML string """
+        return xmlmap.load_xmlobject_from_string(xml_string, xmlclass=cls)
