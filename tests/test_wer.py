@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 
 import wer
 
@@ -7,7 +8,7 @@ def test_main():
 
 
 def test_loading_from_string():
-    xml_string = """<?xml version="1.0" encoding="UTF-8"?>
+    xml_string = b"""<?xml version="1.0" encoding="UTF-8"?>
         <WERREPORT xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <MACHINEINFO machinename="client-machine.corp.cliendomain.com" os="6.1.6561.2.0.0.256.1"
         lcid="1033"/>
