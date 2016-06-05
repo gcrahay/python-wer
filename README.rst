@@ -16,8 +16,8 @@ Overview
     * - package
       - |version| |downloads| |wheel| |supported-versions| |supported-implementations|
 
-.. |docs| image:: https://readthedocs.org/projects/python-wer/badge/?style=flat
-    :target: https://readthedocs.org/projects/python-wer
+.. |docs| image:: https://readthedocs.org/projects/wer/badge/?style=flat
+    :target: https://readthedocs.org/projects/wer
     :alt: Documentation Status
 
 .. |travis| image:: https://travis-ci.org/gcrahay/python-wer.svg?branch=master
@@ -34,7 +34,7 @@ Overview
 
 .. |coveralls| image:: https://coveralls.io/repos/github/gcrahay/python-wer/badge.svg?branch=master
     :alt: Coverage Status
-    :target: https://coveralls.io/r/gcrahay/python-wer
+    :target: https://coveralls.io/github/gcrahay/python-wer
 
 .. |landscape| image:: https://landscape.io/github/gcrahay/python-wer/master/landscape.svg?style=flat
     :target: https://landscape.io/github/gcrahay/python-wer/master
@@ -81,7 +81,7 @@ Installation
 Documentation
 =============
 
-https://python-wer.readthedocs.io/
+https://wer.readthedocs.io/
 
 Development
 ===========
