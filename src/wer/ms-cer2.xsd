@@ -1,0 +1,110 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="maxpathstring">
+        <xs:restriction base="xs:string">
+            <xs:pattern value=".{0,256}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="osstring">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9.]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="lcidvalue">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:pattern value="[0-9]{4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="reporttypevalues">
+        <xs:restriction base="xs:integer">
+            <xs:pattern value="[0-4]"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="filetypevalues">
+        <xs:restriction base="xs:integer">
+            <xs:pattern value="[1-5]"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="string32">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="{0,32}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="parameterid">
+        <xs:restriction base="xs:integer">
+            <xs:pattern value="[0-9]"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:element name="WERREPORT">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="MACHINEINFO">
+                    <xs:complexType>
+                        <xs:attribute name="machinename" type="maxpathstring" use="required"/>
+                        <xs:attribute name="os" type="osstring" use="required"/>
+                        <xs:attribute name="lcid" type="lcidvalue" use="required"/>
+                        <xs:attribute name="oem" type="string32" use="optional"/>
+                    </xs:complexType>
+                </xs:element>
+                 <xs:element name="USERINFO">
+                    <xs:complexType>
+                        <xs:attribute name="username" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="APPLICATIONINFO" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:attribute name="appname" type="maxpathstring" use="required"/>
+                        <xs:attribute name="apppath" type="maxpathstring" use="required"/>
+                        <xs:attribute name="appcompany" type="maxpathstring" use="optional"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="EVENTINFO">
+                    <xs:complexType>
+                        <xs:attribute name="reporttype" type="reporttypevalues"
+                                      use="required"/>
+                        <xs:attribute name="eventtype" type="xs:string" use="required"/>
+                        <xs:attribute name="friendlyeventname" type="xs:string"
+                                      use="optional"/>
+                        <xs:attribute name="eventdescription" type="xs:string"
+                                      use="optional"/>
+                        <xs:attribute name="eventtime" type="xs:unsignedLong"
+                                      use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="SIGNATURE">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element minOccurs="0" maxOccurs="10" name="PARAMETER">
+                                <xs:complexType>
+                                    <xs:attribute name="id" type="parameterid" use="required"/>
+                                    <xs:attribute name="name" type="xs:string" use="optional"/>
+                                    <xs:attribute name="value" type="xs:string" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="unbounded" name="SECONDARYPARAMETER">
+                                <xs:complexType>
+                                    <xs:attribute name="name" type="xs:string" use="required"/>
+                                    <xs:attribute name="value" type="xs:string" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="FILES">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element minOccurs="0" maxOccurs="unbounded" name="FILE">
+                                <xs:complexType>
+                                    <xs:attribute name="filename" type="maxpathstring" use="required"/>
+                                    <xs:attribute name="filetype" type="filetypevalues" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

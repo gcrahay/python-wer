@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from eulxml import xmlmap
+from os import path
 from wer.helpers import DateField
 
 REPORT_TYPES = (
@@ -96,6 +97,7 @@ class Report(xmlmap.XmlObject):
     """ Windows Error Report
     """
     ROOT_NAME = 'WERREPORT'
+    XSD_SCHEMA = path.join(path.dirname(__file__), 'ms-cer2.xsd')
     machine = xmlmap.NodeField('MACHINEINFO', MachineInfo)
     """ Machine informations :type :class:`wer.schema.MachineInfo` """
     user = xmlmap.StringField('USERINFO/@username')
@@ -112,11 +114,11 @@ class Report(xmlmap.XmlObject):
     """ Event attached files :type list of :class:`wer.schema.File` """
 
     @classmethod
-    def from_file(cls, file_path):
+    def from_file(cls, file_path, validate=True):
         """ Creates a Report from a XML file """
-        return xmlmap.load_xmlobject_from_file(file_path, xmlclass=cls)
+        return xmlmap.load_xmlobject_from_file(file_path, xmlclass=cls, validate=validate)
 
     @classmethod
-    def from_string(cls, xml_string):
+    def from_string(cls, xml_string, validate=True):
         """ Creates a Report from a XML string """
-        return xmlmap.load_xmlobject_from_string(xml_string, xmlclass=cls)
+        return xmlmap.load_xmlobject_from_string(xml_string, xmlclass=cls, validate=validate)
