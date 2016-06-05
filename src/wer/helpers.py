@@ -1,9 +1,10 @@
 # -*- coding: utf8 -*-
 from __future__ import unicode_literals
 
-from eulxml import xmlmap
-from datetime import datetime
 import time
+from datetime import datetime
+
+from eulxml import xmlmap
 
 
 class DateMapper(xmlmap.fields.DateTimeMapper):
