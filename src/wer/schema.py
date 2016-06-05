@@ -1,8 +1,10 @@
 # -*- coding: utf8 -*-
 from __future__ import unicode_literals
 
-from eulxml import xmlmap
 from os import path
+
+from eulxml import xmlmap
+
 from wer.helpers import DateField
 
 REPORT_TYPES = (
