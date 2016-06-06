@@ -21,11 +21,47 @@ FILE_TYPES = (
 )
 
 
-class MachineInfo(xmlmap.XmlObject):
+class DictMixin(object):
+    """ Mixin class in order to export :class:`eulxml.xmlmap.XmlObject values to a Python dict"""
+
+    def to_dict(self):
+        """
+        Recusively exports object values to a dict
+
+        :return: `dict`of values
+        """
+        if not hasattr(self, '_fields'):
+            return self.__dict__
+        result = dict()
+        for field_name, field in self._fields.items():
+            if isinstance(field, xmlmap.NodeField):
+                obj = getattr(self, field_name)
+                if not hasattr(obj, 'to_dict'):
+                    result[field_name] = obj.__dict__
+                else:
+                    result[field_name] = obj.to_dict()
+            elif isinstance(field, xmlmap.NodeListField):
+                objs = getattr(self, field_name)
+                result[field_name] = list()
+                for obj in objs:
+                    if not hasattr(obj, 'to_dict'):
+                        result[field_name].append(obj.__dict__)
+                    else:
+                        result[field_name].append(obj.to_dict())
+            else:
+                result[field_name] = getattr(self, field_name)
+        return result
+
+
+class XmlObject(DictMixin, xmlmap.XmlObject):
+    pass
+
+
+class MachineInfo(XmlObject):
     """ MachineInfo complex type
     """
     ROOT_NAME = 'MACHINEINFO'
-    name = xmlmap.StringField('@machinneame')
+    name = xmlmap.StringField('@machinename')
     """ Machine name :type `string` """
     os = xmlmap.StringField('@os')
     """ Machine operating system version :type `string` """
@@ -35,7 +71,7 @@ class MachineInfo(xmlmap.XmlObject):
     """ Optional machine OEM name :type `string` """
 
 
-class ApplicationInfo(xmlmap.XmlObject):
+class ApplicationInfo(XmlObject):
     """ ApplicationInfo complex type
     """
     ROOT_NAME = 'APPLICATIONINFO'
@@ -47,7 +83,7 @@ class ApplicationInfo(xmlmap.XmlObject):
     """ Optional application company :type `string` """
 
 
-class EventInfo(xmlmap.XmlObject):
+class EventInfo(XmlObject):
     """ EventInfo complex type
     """
     ROOT_NAME = 'EVENTINFO'
@@ -63,7 +99,7 @@ class EventInfo(xmlmap.XmlObject):
     """ Event description :type `string` """
 
 
-class Parameter(xmlmap.XmlObject):
+class Parameter(XmlObject):
     """ Parameter complex type
     """
     ROOT_NAME = 'PARAMETER'
@@ -75,7 +111,7 @@ class Parameter(xmlmap.XmlObject):
     """ Paramneter value :type `string`"""
 
 
-class SecondaryParameter(xmlmap.XmlObject):
+class SecondaryParameter(XmlObject):
     """ Secondary parameter complex type
     """
     ROOT_NAME = 'SECONDARYPARAMETER'
@@ -85,7 +121,7 @@ class SecondaryParameter(xmlmap.XmlObject):
     """ Paramneter value :type `string` """
 
 
-class File(xmlmap.XmlObject):
+class File(XmlObject):
     """ File complex type
     """
     ROOT_NAME = 'FILE'
@@ -95,7 +131,7 @@ class File(xmlmap.XmlObject):
     """ File type :type `int` """
 
 
-class Report(xmlmap.XmlObject):
+class Report(XmlObject):
     """ Windows Error Report
     """
     ROOT_NAME = 'WERREPORT'
