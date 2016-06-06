@@ -107,7 +107,14 @@ def install_packages(home, *packages):
     check_call(cmd)
 
 
+def install_binary_packages(home, *packages):
+    cmd = [home + "/Scripts/pip.exe", "install", "--only-binary", ":all:"]
+    cmd.extend(packages)
+    check_call(cmd)
+
+
 if __name__ == "__main__":
     install_python(environ['PYTHON_VERSION'], environ['PYTHON_ARCH'], environ['PYTHON_HOME'])
     install_pip(environ['PYTHON_HOME'])
     install_packages(environ['PYTHON_HOME'], "setuptools>=18.0.1", "wheel", "tox", "virtualenv>=13.1.0")
+    install_packages(environ['PYTHON_HOME'], "lxml")
