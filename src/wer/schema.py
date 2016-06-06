@@ -1,6 +1,7 @@
 # -*- coding: utf8 -*-
 from __future__ import unicode_literals
 
+import hashlib
 from os import path
 
 from eulxml import xmlmap
@@ -172,3 +173,19 @@ class Report(XmlObject):
         :returns: :class:`wer.schema.Report`
         """
         return xmlmap.load_xmlobject_from_string(xml_string, xmlclass=cls, validate=validate)
+
+    @property
+    def id(self):
+        """
+        Computes the signature of the record, a SHA-512 of significant values
+
+        :return: SHa-512 Hex string
+        """
+        h = hashlib.new('sha512')
+        h.update(
+            "|{}|{}|{}|{}|{}|{}|{}|{}|".format(self.machine.name, self.machine.os, self.user, self.application.name,
+                                               self.application.path, self.event.report_type, self.event.type,
+                                               self.event.time.isoformat()))
+        for parameter in sorted(self.parameters, key=lambda k: getattr(k, 'id')):
+            h.update(parameter.value)
+        return h.hexdigest()
