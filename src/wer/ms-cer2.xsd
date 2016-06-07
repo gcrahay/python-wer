@@ -27,7 +27,7 @@
     </xs:simpleType>
     <xs:simpleType name="string32">
         <xs:restriction base="xs:string">
-            <xs:pattern value="{0,32}"/>
+            <xs:pattern value=".{0,32}"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="parameterid">
@@ -92,7 +92,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="FILES">
+                <xs:element name="FILES" minOccurs="0" maxOccurs="1">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element minOccurs="0" maxOccurs="unbounded" name="FILE">
