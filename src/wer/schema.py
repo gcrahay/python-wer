@@ -189,3 +189,70 @@ class Report(XmlObject):
         for parameter in sorted(self.parameters, key=lambda k: getattr(k, 'id')):
             h.update(parameter.value)
         return h.hexdigest()
+
+
+class ProcessVmInformation(XmlObject):
+    ROOT_NAME = 'ProcessVmInformation'
+    peak_virtual_size = xmlmap.IntegerField('PeakVirtualSize')
+    virtual_size = xmlmap.IntegerField('VirtualSize')
+    pagefault_count = xmlmap.IntegerField('PageFaultCount')
+    peak_workingset_size = xmlmap.IntegerField('PeakWorkingSetSize')
+    workingset_size = xmlmap.IntegerField('WorkingSetSize')
+    quota_peak_paged_pool_usage = xmlmap.IntegerField('QuotaPeakPagedPoolUsage')
+    quota_paged_pool_usage = xmlmap.IntegerField('QuotaPagedPoolUsage')
+    quota_peak_nonpaged_pool_usage = xmlmap.IntegerField('QuotaPeakNonPagedPoolUsage')
+    quota_nonpaged_pool_usage = xmlmap.IntegerField('QuotaPagedNonPoolUsage')
+    pagefile_usage = xmlmap.IntegerField('PagefileUsage')
+    peak_pagefile_usage = xmlmap.IntegerField('PeakPagefileUsage')
+    private_usage = xmlmap.IntegerField('PrivateUsage')
+
+
+class ProcessInformation(XmlObject):
+    ROOT_NAME = 'ProcessInformation'
+    XSD_SCHEMA = path.join(path.dirname(__file__), 'wer-metadata.xsd')
+    pid = xmlmap.IntegerField('Pid')
+    image = xmlmap.StringField('ImageName')
+    # Must generate more samples : bytes, string or integer ?
+    cmd_line_signature = xmlmap.StringField('CmdLineSignature')
+    uptime = xmlmap.IntegerField('Uptime')
+    vm = xmlmap.NodeField('ProcessVmInformation', ProcessVmInformation)
+    parent = xmlmap.NodeField('ParentProcess/ProcessInformation', 'self', required=False)
+
+
+class OSVersionInformation(XmlObject):
+    ROOT_NAME = 'OSVersionInformation'
+    version = xmlmap.StringField('WindowsNTVersion')
+    build = xmlmap.IntegerField('Build')
+    product = xmlmap.StringField('Product')
+    edition = xmlmap.StringField('Edition')
+    build_info = xmlmap.StringField('BuildString')
+    revision = xmlmap.IntegerField('Revision')
+    flavor = xmlmap.StringField('Flavor')
+    architecture = xmlmap.StringField('Architecture')
+    lcid = xmlmap.IntegerField('LCID')
+
+
+class SystemInformation(XmlObject):
+    ROOT_NAME = 'SystemInformation'
+    id = xmlmap.StringField('MID')
+    manufacturer = xmlmap.StringField('SystemManufacturer')
+    product = xmlmap.StringField('SystemProductName')
+    bios_version = xmlmap.StringField('BIOSVersion')
+    # TODO: Parse to date with timezone bias
+    install_date = xmlmap.IntegerField('OSInstallDate')
+
+
+class SecureBootState(XmlObject):
+    # TODO: generate more samples with secure boot enabled machines
+    ROOT_NAME = 'SecureBootState'
+    uefi_state = xmlmap.StringField('UEFISecureBootEnabled', required=False)
+
+
+class ReportMetadata(XmlObject):
+    ROOT_NAME = 'WERReportMetadata'
+    os = xmlmap.NodeField('OSVersionInformation', OSVersionInformation)
+    process = xmlmap.NodeField('ProcessInformation', ProcessInformation)
+    system = xmlmap.NodeField('SystemInformation', SystemInformation)
+    secure_boot = xmlmap.NodeField('SecureBootState', SecureBootState, required=False)
+    id = xmlmap.StringField('ReportInformation/Guid')
+    created_on = xmlmap.StringField('ReportInformation/CreationTime')

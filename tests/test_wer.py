@@ -46,3 +46,14 @@ def test_loading_from_files():
         assert isinstance(report, wer.Report)
         assert signature != report.id
         signature = report.id
+
+
+def test_metadata():
+    from os import path
+    from glob import glob
+    examples_path = path.join(path.basename(__file__), 'data', 'examples')
+    signature = None
+    for f in glob(path.join(examples_path, 'WERInternalMetadata_*.xml')):
+        meta = wer.ReportMetadata.from_file(f)
+        assert isinstance(meta, wer.ReportMetadata)
+

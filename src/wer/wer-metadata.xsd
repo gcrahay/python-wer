@@ -1,0 +1,148 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="WERReportMetadata">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="OSVersionInformation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="WindowsNTVersion"/>
+              <xs:element type="xs:short" name="Build"/>
+              <xs:element type="xs:string" name="Product"/>
+              <xs:element type="xs:string" name="Edition"/>
+              <xs:element type="xs:string" name="BuildString"/>
+              <xs:element type="xs:short" name="Revision"/>
+              <xs:element type="xs:string" name="Flavor"/>
+              <xs:element type="xs:string" name="Architecture"/>
+              <xs:element type="xs:short" name="LCID"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ProcessInformation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:short" name="Pid"/>
+              <xs:element type="xs:string" name="ImageName"/>
+              <xs:element type="xs:byte" name="CmdLineSignature"/>
+              <xs:element type="xs:short" name="Uptime"/>
+              <xs:element name="ProcessVmInformation">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:int" name="PeakVirtualSize"/>
+                    <xs:element type="xs:int" name="VirtualSize"/>
+                    <xs:element type="xs:short" name="PageFaultCount"/>
+                    <xs:element type="xs:int" name="PeakWorkingSetSize"/>
+                    <xs:element type="xs:int" name="WorkingSetSize"/>
+                    <xs:element type="xs:int" name="QuotaPeakPagedPoolUsage"/>
+                    <xs:element type="xs:int" name="QuotaPagedPoolUsage"/>
+                    <xs:element type="xs:short" name="QuotaPeakNonPagedPoolUsage"/>
+                    <xs:element type="xs:short" name="QuotaNonPagedPoolUsage"/>
+                    <xs:element type="xs:int" name="PagefileUsage"/>
+                    <xs:element type="xs:int" name="PeakPagefileUsage"/>
+                    <xs:element type="xs:int" name="PrivateUsage"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ParentProcess">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="ProcessInformation">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:short" name="Pid"/>
+                          <xs:element type="xs:string" name="ImageName"/>
+                          <xs:element type="xs:byte" name="CmdLineSignature"/>
+                          <xs:element type="xs:int" name="Uptime"/>
+                          <xs:element name="ProcessVmInformation">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:long" name="PeakVirtualSize"/>
+                                <xs:element type="xs:long" name="VirtualSize"/>
+                                <xs:element type="xs:int" name="PageFaultCount"/>
+                                <xs:element type="xs:int" name="PeakWorkingSetSize"/>
+                                <xs:element type="xs:int" name="WorkingSetSize"/>
+                                <xs:element type="xs:int" name="QuotaPeakPagedPoolUsage"/>
+                                <xs:element type="xs:int" name="QuotaPagedPoolUsage"/>
+                                <xs:element type="xs:int" name="QuotaPeakNonPagedPoolUsage"/>
+                                <xs:element type="xs:int" name="QuotaNonPagedPoolUsage"/>
+                                <xs:element type="xs:int" name="PagefileUsage"/>
+                                <xs:element type="xs:int" name="PeakPagefileUsage"/>
+                                <xs:element type="xs:int" name="PrivateUsage"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ProblemSignatures">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="EventType"/>
+              <xs:element type="xs:string" name="Parameter0"/>
+              <xs:element type="xs:string" name="Parameter1"/>
+              <xs:element type="xs:string" name="Parameter2"/>
+              <xs:element type="xs:string" name="Parameter3"/>
+              <xs:element type="xs:string" name="Parameter4"/>
+              <xs:element type="xs:string" name="Parameter5"/>
+              <xs:element type="xs:string" name="Parameter6"/>
+              <xs:element type="xs:string" name="Parameter7"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DynamicSignatures">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="Parameter1"/>
+              <xs:element type="xs:string" name="Parameter2"/>
+              <xs:element type="xs:string" name="Parameter22"/>
+              <xs:element type="xs:string" name="Parameter23"/>
+              <xs:element type="xs:string" name="Parameter24"/>
+              <xs:element type="xs:string" name="Parameter25"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SystemInformation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="MID"/>
+              <xs:element type="xs:string" name="SystemManufacturer"/>
+              <xs:element type="xs:string" name="SystemProductName"/>
+              <xs:element type="xs:string" name="BIOSVersion"/>
+              <xs:element type="xs:int" name="OSInstallDate"/>
+              <xs:element type="xs:string" name="TimeZoneBias"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SecureBootState">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="UEFISecureBootEnabled"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Integrator">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:byte" name="Flags"/>
+              <xs:element type="xs:byte" name="SuspensionTimeDelta"/>
+              <xs:element type="xs:string" name="ExemptionTimeDelta"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ReportInformation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="Guid"/>
+              <xs:element type="xs:dateTime" name="CreationTime"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
