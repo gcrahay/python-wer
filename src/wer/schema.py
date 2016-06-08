@@ -248,11 +248,18 @@ class SecureBootState(XmlObject):
     uefi_state = xmlmap.StringField('UEFISecureBootEnabled', required=False)
 
 
+class MetaParameter(XmlObject):
+    id = xmlmap.IntegerField('substring(name(), 10)')
+    value = xmlmap.StringField('text()')
+
+
 class ReportMetadata(XmlObject):
     ROOT_NAME = 'WERReportMetadata'
     os = xmlmap.NodeField('OSVersionInformation', OSVersionInformation)
     process = xmlmap.NodeField('ProcessInformation', ProcessInformation)
     system = xmlmap.NodeField('SystemInformation', SystemInformation)
     secure_boot = xmlmap.NodeField('SecureBootState', SecureBootState, required=False)
+    parameters = xmlmap.NodeListField('ProblemSignatures/*[starts-with(name(), "Parameter")]', MetaParameter)
+    dynamic_parameters = xmlmap.NodeListField('DynamicSignatures/*[starts-with(name(), "Parameter")]', MetaParameter)
     id = xmlmap.StringField('ReportInformation/Guid')
     created_on = xmlmap.StringField('ReportInformation/CreationTime')
