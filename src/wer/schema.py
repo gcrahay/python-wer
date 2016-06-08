@@ -54,6 +54,30 @@ class DictMixin(object):
         return result
 
 
+class LoaderMixin(object):
+    @classmethod
+    def from_file(cls, file_path, validate=True):
+        """ Creates a Python object from a XML file
+
+        :param file_path: Path to the XML file
+        :param validate: XML should be validated against the embedded XSD definition
+        :type validate: Boolean
+        :returns: the Python object
+        """
+        return xmlmap.load_xmlobject_from_file(file_path, xmlclass=cls, validate=validate)
+
+    @classmethod
+    def from_string(cls, xml_string, validate=True):
+        """ Creates a Python object from a XML string
+
+        :param xml_string: XML string
+        :param validate: XML should be validated against the embedded XSD definition
+        :type validate: Boolean
+        :returns: the Python object
+        """
+        return xmlmap.load_xmlobject_from_string(xml_string, xmlclass=cls, validate=validate)
+
+
 class XmlObject(DictMixin, xmlmap.XmlObject):
     pass
 
@@ -132,7 +156,7 @@ class File(XmlObject):
     """ File type :type `int` """
 
 
-class Report(XmlObject):
+class Report(LoaderMixin, XmlObject):
     """ Windows Error Report
     """
     ROOT_NAME = 'WERREPORT'
@@ -151,28 +175,6 @@ class Report(XmlObject):
     """ Event secondary parameters :type list of :class:`wer.schema.SecondaryParameter` """
     files = xmlmap.NodeListField('FILES/FILE', File)
     """ Event attached files :type list of :class:`wer.schema.File` """
-
-    @classmethod
-    def from_file(cls, file_path, validate=True):
-        """ Creates a Report from a XML file
-
-        :param file_path: Path to the XML WER file
-        :param validate: XML should be validated against the embedded XSD definition
-        :type validate: Boolean
-        :returns: :class:`wer.schema.Report`
-        """
-        return xmlmap.load_xmlobject_from_file(file_path, xmlclass=cls, validate=validate)
-
-    @classmethod
-    def from_string(cls, xml_string, validate=True):
-        """ Creates a Report from a XML string
-
-        :param xml_string: XML WER string
-        :param validate: XML should be validated against the embedded XSD definition
-        :type validate: Boolean
-        :returns: :class:`wer.schema.Report`
-        """
-        return xmlmap.load_xmlobject_from_string(xml_string, xmlclass=cls, validate=validate)
 
     @property
     def id(self):
@@ -253,7 +255,7 @@ class MetaParameter(XmlObject):
     value = xmlmap.StringField('text()')
 
 
-class ReportMetadata(XmlObject):
+class ReportMetadata(LoaderMixin, XmlObject):
     ROOT_NAME = 'WERReportMetadata'
     os = xmlmap.NodeField('OSVersionInformation', OSVersionInformation)
     process = xmlmap.NodeField('ProcessInformation', ProcessInformation)
