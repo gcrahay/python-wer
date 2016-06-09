@@ -7,6 +7,16 @@ def test_main():
     assert wer
 
 
+def test_windows_unix_timestam():
+    from wer import helpers
+    assert 1205218919 == helpers.windows_to_unix_timestamp(128496925196486378)
+
+
+def test_unix_windows_timestamp():
+    from wer import helpers
+    assert 128496925190000000 == helpers.unix_to_windows_timestamp(1205218919)
+
+
 def test_loading_from_string():
     xml_string = b"""<?xml version="1.0" encoding="UTF-8"?>
         <WERREPORT xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -56,4 +66,3 @@ def test_metadata():
     for f in glob(path.join(examples_path, 'WERInternalMetadata_*.xml')):
         meta = wer.ReportMetadata.from_file(f)
         assert isinstance(meta, wer.ReportMetadata)
-
