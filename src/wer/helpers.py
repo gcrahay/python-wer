@@ -17,7 +17,7 @@ def windows_to_unix_timestamp(windows_timestamp):
     :rtype: int
     """
     magic_number = 11644473600
-    return (windows_timestamp / 10000000) - magic_number
+    return int((windows_timestamp / 10000000) - magic_number)
 
 
 def unix_to_windows_timestamp(unix_timestamp):
