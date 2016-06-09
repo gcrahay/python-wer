@@ -55,6 +55,9 @@ class DictMixin(object):
 
 
 class LoaderMixin(object):
+    """ Loading XML into object mixin
+
+    """
     @classmethod
     def from_file(cls, file_path, validate=True):
         """ Creates a Python object from a XML file
