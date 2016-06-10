@@ -60,6 +60,7 @@ class LoaderMixin(object):
     """ Loading XML into object mixin
 
     """
+
     @classmethod
     def from_file(cls, file_path, validate=True):
         """ Creates a Python object from a XML file
@@ -189,12 +190,12 @@ class Report(LoaderMixin, XmlObject):
         :return: SHa-512 Hex string
         """
         h = hashlib.new('sha512')
-        h.update(
-            "|{}|{}|{}|{}|{}|{}|{}|{}|".format(self.machine.name, self.machine.os, self.user, self.application.name,
-                                               self.application.path, self.event.report_type, self.event.type,
-                                               self.event.time.isoformat()))
+        for value in (self.machine.name, self.machine.os, self.user, self.application.name,
+                      self.application.path, self.event.report_type, self.event.type,
+                      self.event.time.isoformat()):
+            h.update(str(value).encode('utf-8'))
         for parameter in sorted(self.parameters, key=lambda k: getattr(k, 'id')):
-            h.update(parameter.value)
+            h.update(parameter.value.encode('utf-8'))
         return h.hexdigest()
 
 
