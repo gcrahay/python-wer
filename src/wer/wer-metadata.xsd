@@ -22,8 +22,8 @@
             <xs:sequence>
               <xs:element type="xs:short" name="Pid"/>
               <xs:element type="xs:string" name="ImageName"/>
-              <xs:element type="xs:byte" name="CmdLineSignature"/>
-              <xs:element type="xs:short" name="Uptime"/>
+              <xs:element type="xs:string" name="CmdLineSignature"/>
+              <xs:element type="xs:int" name="Uptime"/>
               <xs:element name="ProcessVmInformation">
                 <xs:complexType>
                   <xs:sequence>
@@ -50,7 +50,7 @@
                         <xs:sequence>
                           <xs:element type="xs:short" name="Pid"/>
                           <xs:element type="xs:string" name="ImageName"/>
-                          <xs:element type="xs:byte" name="CmdLineSignature"/>
+                          <xs:element type="xs:string" name="CmdLineSignature"/>
                           <xs:element type="xs:int" name="Uptime"/>
                           <xs:element name="ProcessVmInformation">
                             <xs:complexType>
@@ -83,28 +83,25 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element type="xs:string" name="EventType"/>
-              <xs:element type="xs:string" name="Parameter0"/>
-              <xs:element type="xs:string" name="Parameter1"/>
-              <xs:element type="xs:string" name="Parameter2"/>
-              <xs:element type="xs:string" name="Parameter3"/>
-              <xs:element type="xs:string" name="Parameter4"/>
-              <xs:element type="xs:string" name="Parameter5"/>
-              <xs:element type="xs:string" name="Parameter6"/>
-              <xs:element type="xs:string" name="Parameter7"/>
+              <xs:element type="xs:string" name="Parameter0" minOccurs="0" maxOccurs="1"/>
+              <xs:element type="xs:string" name="Parameter1" minOccurs="0" maxOccurs="1"/>
+              <xs:element type="xs:string" name="Parameter2" minOccurs="0" maxOccurs="1"/>
+              <xs:element type="xs:string" name="Parameter3" minOccurs="0" maxOccurs="1"/>
+              <xs:element type="xs:string" name="Parameter4" minOccurs="0" maxOccurs="1"/>
+              <xs:element type="xs:string" name="Parameter5" minOccurs="0" maxOccurs="1"/>
+              <xs:element type="xs:string" name="Parameter6" minOccurs="0" maxOccurs="1"/>
+              <xs:element type="xs:string" name="Parameter7" minOccurs="0" maxOccurs="1"/>
+              <xs:element type="xs:string" name="Parameter8" minOccurs="0" maxOccurs="1"/>
+              <xs:element type="xs:string" name="Parameter9" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
         <xs:element name="DynamicSignatures">
           <xs:complexType>
-            <xs:sequence>
-              <xs:element type="xs:string" name="Parameter1"/>
-              <xs:element type="xs:string" name="Parameter2"/>
-              <xs:element type="xs:string" name="Parameter22"/>
-              <xs:element type="xs:string" name="Parameter23"/>
-              <xs:element type="xs:string" name="Parameter24"/>
-              <xs:element type="xs:string" name="Parameter25"/>
-            </xs:sequence>
-          </xs:complexType>
+                <xs:sequence>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+                </xs:sequence>
+            </xs:complexType>
         </xs:element>
         <xs:element name="SystemInformation">
           <xs:complexType>

@@ -2,23 +2,7 @@ from __future__ import unicode_literals
 
 import wer
 
-
-def test_main():
-    assert wer
-
-
-def test_windows_unix_timestam():
-    from wer import helpers
-    assert 1205218919 == helpers.windows_to_unix_timestamp(128496925196486378)
-
-
-def test_unix_windows_timestamp():
-    from wer import helpers
-    assert 128496925190000000 == helpers.unix_to_windows_timestamp(1205218919)
-
-
-def test_loading_from_string():
-    xml_string = b"""<?xml version="1.0" encoding="UTF-8"?>
+WER_XML = b"""<?xml version="1.0" encoding="UTF-8"?>
         <WERREPORT xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <MACHINEINFO machinename="client-machine.corp.cliendomain.com" os="6.1.6561.2.0.0.256.1"
         lcid="1033"/>
@@ -42,14 +26,36 @@ def test_loading_from_string():
         </FILES>
         </WERREPORT>
         """
-    report = wer.Report.from_string(xml_string)
+
+def test_main():
+    assert wer
+
+
+def test_windows_unix_timestam():
+    from wer import helpers
+    assert 1205218919 == helpers.windows_to_unix_timestamp(128496925196486378)
+
+
+def test_unix_windows_timestamp():
+    from wer import helpers
+    assert 128496925190000000 == helpers.unix_to_windows_timestamp(1205218919)
+
+
+def test_loading_from_string():
+    report = wer.Report.from_string(WER_XML)
     assert isinstance(report, wer.Report)
+
+
+def test_serialize_dict():
+    report = wer.Report.from_string(WER_XML)
+    report_dict = report.to_dict()
+    assert 'files' in report_dict and len(report_dict['files']) == 1
 
 
 def test_loading_from_files():
     from os import path
     from glob import glob
-    examples_path = path.join(path.basename(__file__), 'data', 'examples')
+    examples_path = path.join(path.dirname(__file__), 'data', 'examples')
     signature = None
     for f in glob(path.join(examples_path, '*.wer')):
         report = wer.Report.from_file(f)
@@ -61,8 +67,6 @@ def test_loading_from_files():
 def test_metadata():
     from os import path
     from glob import glob
-    examples_path = path.join(path.basename(__file__), 'data', 'examples')
-    signature = None
-    for f in glob(path.join(examples_path, 'WERInternalMetadata_*.xml')):
-        meta = wer.ReportMetadata.from_file(f)
-        assert isinstance(meta, wer.ReportMetadata)
+    example_path = path.join(path.dirname(__file__), 'data', 'examples', 'WERInternalMetadata_000.xml')
+    meta = wer.ReportMetadata.from_file(example_path)
+    assert isinstance(meta, wer.ReportMetadata)
