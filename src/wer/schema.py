@@ -216,7 +216,6 @@ class ProcessVmInformation(XmlObject):
 
 class ProcessInformation(XmlObject):
     ROOT_NAME = 'ProcessInformation'
-    XSD_SCHEMA = path.join(path.dirname(__file__), 'wer-metadata.xsd')
     pid = xmlmap.IntegerField('Pid')
     image = xmlmap.StringField('ImageName')
     # Must generate more samples : bytes, string or integer ?
@@ -262,6 +261,7 @@ class MetaParameter(XmlObject):
 
 class ReportMetadata(LoaderMixin, XmlObject):
     ROOT_NAME = 'WERReportMetadata'
+    XSD_SCHEMA = path.join(path.dirname(__file__), 'wer-metadata.xsd')
     os = xmlmap.NodeField('OSVersionInformation', OSVersionInformation)
     process = xmlmap.NodeField('ProcessInformation', ProcessInformation)
     system = xmlmap.NodeField('SystemInformation', SystemInformation)
