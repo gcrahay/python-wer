@@ -37,7 +37,9 @@ class DictMixin(object):
         for field_name, field in self._fields.items():
             if isinstance(field, xmlmap.NodeField):
                 obj = getattr(self, field_name)
-                if not hasattr(obj, 'to_dict'):
+                if obj is None:
+                    result[field_name] = None
+                elif not hasattr(obj, 'to_dict'):
                     result[field_name] = obj.__dict__
                 else:
                     result[field_name] = obj.to_dict()
